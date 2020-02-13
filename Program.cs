@@ -10,24 +10,24 @@ namespace TesteDotNet
         {
             var usuarioPc = System.Environment.UserName;
 
-            Console.WriteLine($"Seja bem vindo {usuarioPc}", Console.ForegroundColor = ConsoleColor.White);
+            Console.WriteLine($"Seja bem vindo! {usuarioPc}", Console.ForegroundColor = ConsoleColor.White);
 
             SetInitial();
         }
 
         static void SetInitial()
-        {
-            Console.WriteLine("------------------------\n", Console.ForegroundColor = ConsoleColor.White);
+        {            
+            Console.WriteLine("----------------------------------------------\n", Console.ForegroundColor = ConsoleColor.White);
             Console.WriteLine("Opções:");
             Console.WriteLine("\t1 - Adição");
             Console.WriteLine("\t2 - Subtração");
             Console.WriteLine("\t3 - Multiplicação");
             Console.WriteLine("\t4 - Divisão");
-            Console.WriteLine("\t5 - Adição de uma lista de números");
+            Console.WriteLine("\t5 - Somar uma lista de números");
             Console.WriteLine("\t6 - Calcular média de uma lista de números");
-            Console.WriteLine("\t7 - Calcular os numeros pares da lista");
+            Console.WriteLine("\t7 - Calcular os numeros pares de uma lista");
             Console.WriteLine("\t8 - Salvando no dicionario");
-            Console.WriteLine("\n------------------------\n");
+            Console.WriteLine("----------------------------------------------\n");
 
             Console.WriteLine("Qual operação deseja?: ");
             int operacao = Convert.ToInt32(Console.ReadLine());
@@ -37,33 +37,36 @@ namespace TesteDotNet
             else
             {
                 Console.WriteLine("\n");
-                Console.WriteLine($"A opção escolhida está invalida: {operacao}");
-                Console.WriteLine("\n");
+                Console.Clear();
+                Console.WriteLine($"A opção escolhida: {operacao} está invalida, digite uma opção valida\n",Console.ForegroundColor = ConsoleColor.Red);
+                Console.ResetColor();
                 SetInitial();
             }
         }
 
         static void GetCalculadora(int operacao)
         {
+            #region Declaração de variaveis
             var valor01 = 0.0;
             var valor02 = 0.0;
             var total = 0.0;
             List<double> listaValores = new List<double>();
             List<int> listaNumerosPares = new List<int>();
             var operacaoMatematica = string.Empty;
+            #endregion
 
             if (operacao == 5 || operacao == 6 || operacao == 7)
             {
-                Console.Write("Digite uma lista de números ou Esc para sair ");
-
+                Console.Write("Digite uma lista de números ou Esc para sair");
                 Console.WriteLine("\n");
+
                 do
                 {
                     Console.Clear();
-                    Console.Write("Digite um numero: ", Console.ForegroundColor = ConsoleColor.White);
+                    Console.Write("Digite um número:", Console.ForegroundColor = ConsoleColor.White);
                     var testeNumber = Console.ReadLine();
 
-                    //Verificador se está passando valor vavidos.
+                    //Verificação se está passando valor vavidos.
                     bool verificador = GetNumeros(testeNumber);
 
                     if (verificador)
@@ -75,39 +78,38 @@ namespace TesteDotNet
                         //Valores que foi digitado anteriormente
                         GetValores(listaValores);
 
-                        Console.Write("\n Pressione qualquer tecla  para continuar ou Esc para sair");
+                        Console.Write("\nPressione qualquer tecla  para continuar ou Esc para sair");
                     }
                     else
                     {
                         Console.Write("O valor digitado esta invalido, digite um numero valido", Console.ForegroundColor = ConsoleColor.Red);
                         Console.WriteLine("\n");
-                        Console.Write("Digite Enter  para continuar  ou Esc para sair ", Console.ForegroundColor = ConsoleColor.Blue);
+                        Console.Write("nPressione Enter para continuar ou Esc para sair ", Console.ForegroundColor = ConsoleColor.Blue);
                         Console.WriteLine("\n");
                     }
 
                 } while (Console.ReadKey().Key != ConsoleKey.Escape);
                 {
-
                     if (operacao == 5)
                     {
-                        //Método somar lista de numeros
+                        //Método somar lista de números
                         total = GetSoma(listaValores);
 
-                        //Formatação de numeros
+                        //Formatação de números
                         string.Format("{0:0,0.00}", total);
 
                         Console.WriteLine("\n");
-                        Console.WriteLine($"O total das samos dos números :{total}", Console.ForegroundColor = ConsoleColor.Blue);
+                        Console.WriteLine($"\nTotal das samos dos números é:{total}\n", Console.ForegroundColor = ConsoleColor.Blue);
                         Console.WriteLine("\n");
                     }
 
                     if (operacao == 6)
                     {
-                        //CalcaularMedia
+                        //CalcaularMédia
                         var valorMedia = GetCalculaMedia(listaValores);
 
                         Console.WriteLine("\n");
-                        Console.WriteLine($"A media desses valores é :{valorMedia}", Console.ForegroundColor = ConsoleColor.Blue);
+                        Console.WriteLine($"A média desses valores são:{valorMedia}", Console.ForegroundColor = ConsoleColor.Blue);
                         Console.WriteLine("\n");
                     }
 
@@ -116,12 +118,10 @@ namespace TesteDotNet
                         //Método somar numeros pares
                         var valorPares = GetCalculaPares(listaValores);
 
-                        Console.WriteLine("\n");
-
-                        Console.WriteLine("Os numeros digitados até agora são :");
+                        Console.WriteLine("\n");    
                         //Formatação de numeros
                         string.Format("{0:0,0.00}", valorPares);
-                        Console.WriteLine($"A soma dos números pares:{valorPares}", Console.ForegroundColor = ConsoleColor.Blue);
+                        Console.WriteLine($"A soma dos números pares são:{valorPares}", Console.ForegroundColor = ConsoleColor.Blue);
                         Console.WriteLine("\n");
                     }
 
@@ -136,6 +136,7 @@ namespace TesteDotNet
                 //Método para criar lista Dicionario.
                 GetDicionario();
                 Console.WriteLine("\n");
+                //Sair da aplicação.
                 Ext();
             }
 
@@ -148,7 +149,6 @@ namespace TesteDotNet
 
                 Console.WriteLine("Digite o segundo número é pressione enter");
                 valor02 = Convert.ToDouble(Console.ReadLine());
-
             }
             catch (Exception)
             {
@@ -167,7 +167,7 @@ namespace TesteDotNet
                 Console.WriteLine("Obrigado por ultilizar nossa calculadora");
                 Console.WriteLine("\n");
 
-                //Fechando a aplicação
+                //Fechando aplicação
                 Ext();
             }
 
@@ -197,11 +197,9 @@ namespace TesteDotNet
             {
                 total = GetDivição(valor01, valor02);
                 operacaoMatematica = "/";
-            }
-                      
+            }                      
 
             Console.WriteLine("\n");
-
             //Formatação de numeros
             string.Format("{0:0,0.00}", total);
             Console.WriteLine($"O total do calculo é: {valor01} {operacaoMatematica} {valor02} = {total}", Console.ForegroundColor = ConsoleColor.Blue);
@@ -210,6 +208,7 @@ namespace TesteDotNet
             //Fechando aplicação
             Ext();
 
+            //Método para fechar a aplicação.
             static void Ext()
             {
                 Console.Write("Pressione qualquer tecla para execultar outra operação ou ESC para sair");
@@ -222,17 +221,17 @@ namespace TesteDotNet
                     TimeSpan interval = new TimeSpan(2);
                     Console.WriteLine(interval.ToString());
 
-                    //Fechando a aplicação
                     Environment.Exit(0);
                 }
 
-                //Voltar para as operações
+                //Iniciar as operaçôes.
                 Console.Clear();
                 Console.WriteLine("\n");
                 SetInitial();
             }
         }
 
+        #region Métodos matematícos
         //Método de adição
         static double GetSoma(double valor01, double valor02)
         {
@@ -264,8 +263,9 @@ namespace TesteDotNet
 
             return total;
         }
+        #endregion
 
-        //Método calcular media
+        //Método calcular média.
         static double GetCalculaMedia(List<double> listaDeValor)
         {
             var total = listaDeValor.Sum();
@@ -273,7 +273,7 @@ namespace TesteDotNet
             return total;
         }
 
-        //Método calcular valores pares
+        //Método calcular valores pares.
         static double GetCalculaPares(List<double> listaNumerosPares)
         {
             var query = from p in listaNumerosPares
@@ -322,7 +322,6 @@ namespace TesteDotNet
             }
 
             Console.ReadKey();
-
         }
 
         //Verificação de valores digitos são numerico.
